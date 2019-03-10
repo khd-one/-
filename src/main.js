@@ -10,9 +10,13 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 
+//导入抽取的axios
+import axios from './components/libs/axios'
+Vue.use(axios)
 
 //导入router
 import router  from './components/libs/ruter'
+
 
 new Vue({
   render: h => h(App),

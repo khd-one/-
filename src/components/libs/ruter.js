@@ -6,11 +6,22 @@ Vue.use( VueRouter)
 
 import login from '../login.vue'
 
+//导入index
+import index from '../index.vue'
+
 //规则
 let routes =[
-    {
+     {
+         path:'/',
+         component:index
+     }
+    ,{
         path:'/login',
         component:login
+    },
+    {
+        path:'/index',
+        component:index
     }
 ]
 

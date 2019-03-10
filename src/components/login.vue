@@ -41,11 +41,37 @@ export default {
         password: [
             { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 3, max: 8, message: '长度在 3 到 5 个字符', trigger: 'change' }
-          ],
+          ]
       }
     };
-  }
-};
+  },
+   methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            // alert('submit!');
+            this.$http.post("login",this.formDate)
+            .then(res=>{
+                if(res.data.meta.status===400){
+                    this.$message.error(res.data.meta.msg)
+                }else{
+                    this.$message.success(res.data.meta.msg)
+                    //保存TOken
+                    window.sessionStorage.setItem('token',res.data.data.token)
+                    //使用路由提供的方式进行跳转
+                    this.$router.push('/')
+
+                }
+
+            })
+          } else {
+            this.$message.error('错了哦，这是一条错误消息');
+            return false;
+          }
+        });
+      }
+}
+}
 </script>
 <style>
 html,
@@ -54,7 +80,7 @@ body {
   margin: 0;
   padding: 0;
 }
-body > div {
+body > div:first-of-type {
   height: 100%;
 }
 .login {
