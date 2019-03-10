@@ -14,7 +14,7 @@
 </el-col>
   <el-col :span="4" class="header-right">
       <div class="grid-content bg-purple">
-      <el-button type="success" plain>退出</el-button>    
+      <el-button type="success" plain @click="lotout">退出</el-button>    
       </div>
       </el-col>
 </el-row>
@@ -28,7 +28,37 @@
 </template>
 <script>
 export default {
-    
+  beforeCreate(){
+     if(window.sessionStorage.getItem('token',)) {
+      //成功不需要管
+     }else{
+    this.$message.error('滚，没登陆进不来');
+      
+       this.$router.push('login')
+     }
+  },
+  methods: {
+      lotout(){
+        
+        this.$confirm('确定退出吗', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+         window.sessionStorage.removeItem('token')
+         this.$router.push('login')
+
+         
+        
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出'
+          });          
+        });
+      }  
+      
+  },  
 }
 </script>
 <style>
